@@ -3,12 +3,10 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const DefaultLayout = require('./layouts/default');
 const Main = require('./main');
-const objectWithoutProperties = require('../lib/utils').objectWithoutProperties;
-const Context = require('../lib/utils').CONTEXT;
 
 class Application extends React.Component {
   render() {
-    const props = objectWithoutProperties(this.props, ['settings', '_locals', 'cache']);
+    const props = {}
     props.CONTEXT = Context;      // pass in the web page title
 
     return (
