@@ -7,7 +7,7 @@ const Main = require('./main');
 class Application extends React.Component {
   render() {
     const props = {}
-    props.CONTEXT = Context;      // pass in the web page title
+    props.CONTEXT = "Commercial test site";      // pass in the web page title
 
     return (
       <DefaultLayout
