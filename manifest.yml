@@ -1,0 +1,10 @@
+---
+applications:
+- path: .
+  name: strategicinsight
+  host: strategicinsight
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+  memory: 256M
+  instances: 1
+  random-route: false
+  command: npm run machine
