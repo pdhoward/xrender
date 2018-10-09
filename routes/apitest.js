@@ -17,9 +17,8 @@ const apitest = (router) => {
 
     console.log(g('---------test api connections---------'));
 
-      // Test space connection and attach space related data for views if possible
-      //catchErrors(async function (request, response, next) {
-          // Catch misconfigured space credentials and display settings page
+      // Test space connection and attach space related data for views if possible     
+      // Catch misconfigured space credentials and display settings page
           try {
               const space = await getSpace()
               const locales = await getLocales()
@@ -52,8 +51,7 @@ const apitest = (router) => {
                   throw error
              
           }
-          next()
-    //  })
+          next()  
   });
 };
 
