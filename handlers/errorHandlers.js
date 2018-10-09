@@ -1,8 +1,8 @@
-/**
- * Catch Errors Handler
- * Instead of using try{} catch(e) {} in each controller, we wrap the function in
- * catchErrors(), catch any errors they throw, and pass it along to our express middleware with next().
- */
+
+///////////////////////////////////////////////////////
+///////  A handle wrapper for .catch()        ////////
+//////  This tests for presence of err on fn ////////
+/////////////////////////////////////////////////////
 
 module.exports.catchErrors = (fn) => {
   return function (request, response, next) {
