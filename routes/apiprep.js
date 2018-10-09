@@ -4,6 +4,7 @@
 ////////     update res object with additional data      ///////
 ///////////////////////////////////////////////////////////////
 const helpers =               require('../helpers')
+const querystring =           require('querystring')
 const { catchErrors } =       require('../handlers/errorHandlers')
 const { g, b, gr, r, y } =    require('../console');
 

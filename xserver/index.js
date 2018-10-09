@@ -20,7 +20,6 @@ const cors =                  require('cors');
 const favicon =               require('serve-favicon');
 const logger =                require('morgan')
 const helmet =                require('helmet')
-const querystring =           require('querystring')
 const settings =              require('../lib/settings')
 const helpers =               require('../helpers')
 const { updateCookie } =      require('../lib/cookies')
