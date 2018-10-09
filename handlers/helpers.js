@@ -2,7 +2,7 @@
 
 const marked =              require('marked')
 const querystring =         require('querystring')
-const { translate } =       require('./i18n/i18n')
+const { translate } =       require('../i18n/i18n')
 
 function isCustomCredentials (settings) {
   const spaceId = process.env.CONTENTFUL_SPACE_ID

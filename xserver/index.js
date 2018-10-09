@@ -51,7 +51,6 @@ app.use(cookieParser())
 app.set('views', path.join(__dirname, '..', 'src'));
 app.set('view engine', 'js');
 app.engine('js', require('express-react-views').createEngine());
-app.get('/js/bundle.js', browserifier);
 app.use('/css', express.static(path.resolve(__dirname, '..', 'public/css')));
 app.use('/img', express.static(path.resolve(__dirname, '..', 'public/assets/img')));
 app.use(express.static(path.join(__dirname, '..', 'node_modules/semantic-ui/dist')));
@@ -81,6 +80,9 @@ const browserifier = browserify(path.resolve(__dirname, '..', 'public/js/bundle.
 if (!isDev) {
   browserifier.browserify.transform('uglifyify', { global: true });
 }
+
+// register middleware call
+app.get('/js/bundle.js', browserifier);
 
 ///////////////////////////////////////////////////////
 ///////force all production requests to ssl //////////
