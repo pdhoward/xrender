@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////
 ////////    test connections based on configs     ///////
 ////////////////////////////////////////////////////////
+const helpers =               require('../helpers')
 const { getSpace,
         getLocales } =        require('../services/contentful')
 const { g, b, gr, r, y } =    require('../console');
@@ -14,7 +15,7 @@ const apitest = (router) => {
     console.log(g('---------test api connections---------'));
 
       // Test space connection and attach space related data for views if possible
-      app.use(catchErrors(async function (request, response, next) {
+      catchErrors(async function (request, response, next) {
           // Catch misconfigured space credentials and display settings page
           try {
               const space = await getSpace()
@@ -52,7 +53,7 @@ const apitest = (router) => {
               }
           }
           next()
-      }))
+      })
   });
 };
 
