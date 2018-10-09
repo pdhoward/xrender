@@ -56,6 +56,8 @@ app.use(express.static(path.join(__dirname, '..', 'node_modules/semantic-ui/dist
 app.use(favicon(path.join(__dirname, '..', '/public/assets/favicon.ico')));
 app.use(cors());
 
+app.use(settings)    // initialize app settings based on env variables
+
 const isDev = (app.get('env') === 'development');
 
 ///////////////////////////////////////////////////////
@@ -76,7 +78,10 @@ if (!isDev) {
   browserifier.browserify.transform('uglifyify', { global: true });
 }
 
-// Force all requests on production to be served over https
+///////////////////////////////////////////////////////
+///////force all production requests to ssl //////////
+/////////////////////////////////////////////////////
+
 app.use(function (req, res, next) {
   if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
     const secureUrl = 'https://' + req.hostname + req.originalUrl
@@ -85,12 +90,10 @@ app.use(function (req, res, next) {
   next()
 })
 
+///////////////////////////////////////////////////////
+//// make all data visible for views to consume  /////
+/////////////////////////////////////////////////////
 
-// Set our application settings based on environment variables or query parameters
-app.use(settings)
-
-
-// Make data available for our views to consume
 app.use(catchErrors(async function (request, response, next) {
   response.locals.baseUrl = `${request.protocol}://${request.headers.host}`
   // Get enabled locales from Contentful
