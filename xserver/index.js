@@ -50,6 +50,7 @@ app.use(cookieParser())
 app.set('views', path.join(__dirname, '..', 'src'));
 app.set('view engine', 'js');
 app.engine('js', require('express-react-views').createEngine());
+app.get('/js/bundle.js', browserifier);
 app.use('/css', express.static(path.resolve(__dirname, '..', 'public/css')));
 app.use('/img', express.static(path.resolve(__dirname, '..', 'public/assets/img')));
 app.use(express.static(path.join(__dirname, '..', 'node_modules/semantic-ui/dist')));
@@ -256,20 +257,30 @@ const onListening = () => {
 ////////// Register and Config Routes ///////////////
 ////////////////////////////////////////////////////
 
+const apiprep =             express.Router()
+const apitest =             express.Router()
 const home =                express.Router()
 const nopage =              express.Router()
 const errpage =             express.Router()
 
+require('../routes/home')(apiprep)
+require('../routes/home')(apitest)
 require('../routes/home')(home)
-require('../routes/nopage')(home)
-require('../routes/errpage')(home)
+require('../routes/nopage')(nopage)
+require('../routes/errpage')(errpage)
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
 // serve client
-app.get('/js/bundle.js', browserifier);
+//app.get('/js/bundle.js', browserifier);
+
+// update api with additional data
+app.use(apiprep);
+
+// test connections
+app.use(apitest);
 
 // home page
 app.get('/', home);
@@ -285,4 +296,3 @@ const port = normalizePort(process.env.VCAP_APP_PORT || process.env.PORT);
 app.listen(port);
 app.on('error', onError)
 app.on('listening', onListening)
-
