@@ -14,6 +14,7 @@ let previewClient = null
  */
 module.exports.initClients = (options) => {
   // Getting the app version
+
   const { version } = require('../package.json')
   const applicationName = `commerce/${version}`
 

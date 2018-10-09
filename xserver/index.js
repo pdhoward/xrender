@@ -57,8 +57,6 @@ app.use(cors());
 
 app.use(settings)    // initialize app settings based on env variables
 
-app.use(breadcrumb())
-
 const isDev = (app.get('env') === 'development');
 
 ///////////////////////////////////////////////////////
@@ -140,6 +138,9 @@ app.use(apiprep);
 
 // test connections
 app.use(apitest);
+
+// trace via breadcrumbs
+//app.use(breadcrumb())
 
 // home page
 app.get('/', home);
