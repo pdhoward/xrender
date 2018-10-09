@@ -8,7 +8,7 @@ const { g, b, gr, r, y } =    require('../console');
 
 const errpage = (router) => {
 
-  router.use(function(req, res, next) {
+  router.use(function(err, request, response, next) {
       // Set locals, only providing error in development
       response.locals.error = err
       response.locals.error.status = err.status || 500

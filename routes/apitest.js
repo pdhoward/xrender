@@ -4,18 +4,21 @@
 ////////    test connections based on configs     ///////
 ////////////////////////////////////////////////////////
 const helpers =               require('../handlers/helpers')
+const { updateCookie } =      require('../lib/cookies')
 const { getSpace,
         getLocales } =        require('../services/contentful')
 const { g, b, gr, r, y } =    require('../console');
 
+const SETTINGS_NAME = 'CognitiveBookStore'
+
 const apitest = (router) => {
 
-  router.use(function(request, response, next) {
+  router.use(async function(request, response, next) {
 
     console.log(g('---------test api connections---------'));
 
       // Test space connection and attach space related data for views if possible
-      catchErrors(async function (request, response, next) {
+      //catchErrors(async function (request, response, next) {
           // Catch misconfigured space credentials and display settings page
           try {
               const space = await getSpace()
@@ -45,15 +48,12 @@ const apitest = (router) => {
               // To other implementations of this app in the about modal
               helpers.updateSettingsQuery(request, response, response.locals.settings)
           } catch (error) {
-              if ([401, 404].includes(error.response.status)) {
-                  // If we can't connect to the space, force the settings page to be shown.
-                  response.locals.forceSettingsRoute = true
-              } else {
+                  console.log("ERROR")
                   throw error
-              }
+             
           }
           next()
-      })
+    //  })
   });
 };
 

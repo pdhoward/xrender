@@ -21,10 +21,7 @@ const favicon =               require('serve-favicon');
 const logger =                require('morgan')
 const helmet =                require('helmet')
 const settings =              require('../lib/settings')
-//const helpers =               require('../helpers')
-//const { updateCookie } =      require('../lib/cookies')
 const breadcrumb =            require('../lib/breadcrumb')
-//const { catchErrors } =       require('../handlers/errorHandlers')
 const transport =             require('../config/gmail');
 const { g, b, gr, r, y } =    require('../console');
 const { translate, 
@@ -34,8 +31,6 @@ const { normalizePort}      = require('../handlers/helpers')
 
 // Express app
 const app = express();
-
-const SETTINGS_NAME = 'CognitiveBookStore'
 
 //////////////////////////////////////////////////////////////////////////
 ////////////////////  Register Middleware       /////////////////////////
@@ -123,8 +118,8 @@ const home =                express.Router()
 const nopage =              express.Router()
 const errpage =             express.Router()
 
-require('../routes/home')(apiprep)
-require('../routes/home')(apitest)
+require('../routes/apiprep')(apiprep)
+require('../routes/apitest')(apitest)
 require('../routes/home')(home)
 require('../routes/nopage')(nopage)
 require('../routes/errpage')(errpage)

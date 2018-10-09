@@ -11,6 +11,6 @@ module.exports.catchErrors = (fn) => {
         e.status = e.response.status
       }
       next(e)
-    })
+    })   
   }
 }

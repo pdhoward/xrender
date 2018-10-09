@@ -5,16 +5,20 @@
 ///////////////////////////////////////////////////////////////
 const helpers =               require('../handlers/helpers')
 const querystring =           require('querystring')
-const { catchErrors } =       require('../handlers/errorHandlers')
+const {catchErrors} =         require('../handlers/errorHandlers')
+const { translate,
+        initializeTranslations,
+        setFallbackLocale } = require('../i18n/i18n')
 const { g, b, gr, r, y } =    require('../console');
 
 const apiprep = (router) => {
 
   router.use(function(request, response, next) {
 
-    console.log(g('-----------prep api route--------------'));
+    console.log(g('-----------prep api route--------------'));   
 
-    catchErrors(async function (request, response, next) {
+    //catchErrors(async function (request, response, next) {
+      console.log(r("RETURNED"))
       response.locals.baseUrl = `${request.protocol}://${request.headers.host}`
       // Get enabled locales from Contentful
       response.locals.locales = [{ code: 'en-US', name: 'U.S. English' }]
@@ -59,7 +63,7 @@ const apiprep = (router) => {
       }
 
       next()
-    })
+   // })
   });
 };
 

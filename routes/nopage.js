@@ -10,6 +10,7 @@ const { translate } =         require('../i18n/i18n')
 const nopage = (router) => {
 
   router.use(function(request, response, next) {
+    if (response.headersSent) return next();   // exit if headers had been sent
 
     const err = new Error(translate('errorMessage404Route', response.locals.currentLocale.code))
     err.status = 404
