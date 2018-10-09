@@ -58,6 +58,8 @@ app.use(cors());
 
 app.use(settings)    // initialize app settings based on env variables
 
+app.use(breadcrumb())
+
 const isDev = (app.get('env') === 'development');
 
 ///////////////////////////////////////////////////////
@@ -180,7 +182,6 @@ app.use(catchErrors(async function (request, response, next) {
   next()
 }))
 
-app.use(breadcrumb())
 
 
 
@@ -203,6 +204,56 @@ process.on('uncaughtException', function (er) {
     process.exit(1);
   });
 });
+
+
+///////////////////////////////////////////
+//////////Server Utilities ///////////////
+//////////////////////////////////////////
+const normalizePort = (val) => {
+  const port = parseInt(val, 10)
+
+  if (isNaN(port)) {
+    // Named pipe
+    return val
+  }
+
+  if (port >= 0) {
+    // Port number
+    return port
+  }
+
+  return false
+}
+
+const onError = (error)=> {
+  if (error.syscall !== 'listen') {
+    throw error
+  }
+
+  const bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port
+
+  // Handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges')
+      process.exit(1)
+      break
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use')
+      process.exit(1)
+      break
+    default:
+      throw error
+  }
+}
+
+const onListening = () => {
+  const addr = app.address()
+  const uri = typeof addr === 'string' ? addr : `http://localhost:${addr.port}`
+  console.log(`Listening on ${uri}`)
+}
 
 //////////////////////////////////////////////////////
 ////////// Register and Config Routes ///////////////
@@ -244,84 +295,9 @@ app.use(function (err, request, response, next) {
   response.render('error')
 })
 
-const port = process.env.VCAP_APP_PORT || process.env.PORT;
+const port = normalizePort(process.env.VCAP_APP_PORT || process.env.PORT);
 
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+app.listen(port);
+app.on('error', onError)
+app.on('listening', onListening)
 
-
-/////////////////////////integrate ///////////////
-
-/**
- * Get port from environment and store in Express
- */
-const port = normalizePort(process.env.PORT || '3000')
-app.set('port', port)
-
-/**
- * Create HTTP server
- */
-const server = http.createServer(app)
-
-/**
- * Listen on provided port, on all network interfaces
- */
-server.listen(port)
-server.on('error', onError)
-server.on('listening', onListening)
-
-/**
- * Normalize a port into a number, string, or false
- */
-function normalizePort(val) {
-  const port = parseInt(val, 10)
-
-  if (isNaN(port)) {
-    // Named pipe
-    return val
-  }
-
-  if (port >= 0) {
-    // Port number
-    return port
-  }
-
-  return false
-}
-
-/**
- * Event listener for HTTP server "error" event
- */
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error
-  }
-
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port
-
-  // Handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
-      process.exit(1)
-      break
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
-      process.exit(1)
-      break
-    default:
-      throw error
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event
- */
-function onListening() {
-  const addr = server.address()
-  const uri = typeof addr === 'string' ? addr : `http://localhost:${addr.port}`
-  console.log(`Listening on ${uri}`)
-}
