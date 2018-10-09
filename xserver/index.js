@@ -22,13 +22,16 @@ const logger =                require('morgan')
 const helmet =                require('helmet')
 const settings =              require('../lib/settings')
 const helpers =               require('./helpers')
-const { translate, initializeTranslations, setFallbackLocale } =         require('./i18n/i18n')
-const breadcrumb =            require('./lib/breadcrumb')
 const { updateCookie } =      require('./lib/cookies')
-const { getSpace, getLocales } = require('./services/contentful')
-const { catchErrors } = require('./handlers/errorHandlers')
+const breadcrumb =            require('./lib/breadcrumb')
+const { catchErrors } =       require('./handlers/errorHandlers')
 const transport =             require('../config/gmail');
 const { g, b, gr, r, y } =    require('../console');
+const { translate, 
+        initializeTranslations, 
+        setFallbackLocale } = require('./i18n/i18n')
+const { getSpace, 
+        getLocales } =        require('./services/contentful')
 
 // Express app
 const app = express();
@@ -54,8 +57,10 @@ app.use(favicon(path.join(__dirname, '..', '/public/assets/favicon.ico')));
 app.use(cors());
 
 const isDev = (app.get('env') === 'development');
-console.log('isDev: ' + isDev);
 
+///////////////////////////////////////////////////////
+////////////  compile reactjs pages  /////////////////
+/////////////////////////////////////////////////////
 browserify.settings.development.precompile=true;
 browserify.settings.development.cache = true;
 
