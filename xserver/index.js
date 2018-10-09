@@ -273,7 +273,6 @@ app.get('/js/bundle.js', browserifier);
 // home page
 app.get('/', home);
 
-
 // Catch 404 and forward to error handler
 app.use(function (request, response, next) {
   const err = new Error(translate('errorMessage404Route', response.locals.currentLocale.code))
