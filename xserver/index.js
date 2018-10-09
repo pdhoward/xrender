@@ -182,9 +182,6 @@ app.use(catchErrors(async function (request, response, next) {
   next()
 }))
 
-
-
-
 ///////////////////////////////////////////////////////////////////////
 /////////////////// messaging alert for platform errors ///////////////
 //////////////////////////////////////////////////////////////////////
@@ -260,8 +257,12 @@ const onListening = () => {
 ////////////////////////////////////////////////////
 
 const home =                express.Router()
+const nopage =              express.Router()
+const errpage =             express.Router()
 
 require('../routes/home')(home)
+require('../routes/nopage')(home)
+require('../routes/errpage')(home)
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////
@@ -274,25 +275,10 @@ app.get('/js/bundle.js', browserifier);
 app.get('/', home);
 
 // Catch 404 and forward to error handler
-app.use(function (request, response, next) {
-  const err = new Error(translate('errorMessage404Route', response.locals.currentLocale.code))
-  err.status = 404
-  next(err)
-})
+app.use(nopage)
 
 // Error handler
-app.use(function (err, request, response, next) {
-  // Set locals, only providing error in development
-  response.locals.error = err
-  response.locals.error.status = err.status || 500
-  if (request.app.get('env') !== 'development') {
-    delete err.stack
-  }
-  response.locals.title = 'Error'
-  // Render the error page
-  response.status(err.status || 500)
-  response.render('error')
-})
+app.use(errpage)
 
 const port = normalizePort(process.env.VCAP_APP_PORT || process.env.PORT);
 
