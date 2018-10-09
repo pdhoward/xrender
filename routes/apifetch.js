@@ -23,20 +23,20 @@ const apifetch = (router) => {
 
     if (res.headersSent) return next();   // exit if headers had been sent
       // GET the home landing page
-      catchErrors(getLandingPage)
+      getLandingPage()
 
       // Courses routes
-      catchErrors(getCourses)      
-      catchErrors(getCoursesByCategory)      
-      catchErrors(getCourse)
-      catchErrors(getLesson)
+      //catchErrors(getCourses)      
+     // catchErrors(getCoursesByCategory)      
+     // catchErrors(getCourse)
+     // catchErrors(getLesson)
 
       // Settings routes
-      catchErrors(getSettings)
+     // catchErrors(getSettings)
       //catchErrors(postSettings)
 
       // Imprint route
-      catchErrors(getImprint)   
+      //catchErrors(getImprint)   
   });
 // Display settings in case of invalid credentials
   router.all('*', async (request, response, next) => {
