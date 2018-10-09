@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////
 ////////    test connections based on configs     ///////
 ////////////////////////////////////////////////////////
-const helpers =               require('../helpers')
+const helpers =               require('../handlers/helpers')
 const { getSpace,
         getLocales } =        require('../services/contentful')
 const { g, b, gr, r, y } =    require('../console');

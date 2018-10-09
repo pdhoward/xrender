@@ -21,15 +21,18 @@ const favicon =               require('serve-favicon');
 const logger =                require('morgan')
 const helmet =                require('helmet')
 const settings =              require('../lib/settings')
-const helpers =               require('../helpers')
-const { updateCookie } =      require('../lib/cookies')
+//const helpers =               require('../helpers')
+//const { updateCookie } =      require('../lib/cookies')
 const breadcrumb =            require('../lib/breadcrumb')
-const { catchErrors } =       require('../handlers/errorHandlers')
+//const { catchErrors } =       require('../handlers/errorHandlers')
 const transport =             require('../config/gmail');
 const { g, b, gr, r, y } =    require('../console');
 const { translate, 
         initializeTranslations, 
         setFallbackLocale } = require('../i18n/i18n')
+const { normalizePort, 
+        onError,
+        onListening }       = require('../handlers/helpers')
 
 // Express app
 const app = express();
@@ -91,7 +94,6 @@ app.use(function (req, res, next) {
   next()
 })
 
-
 ///////////////////////////////////////////////////////////////////////
 /////////////////// messaging alert for platform errors ///////////////
 //////////////////////////////////////////////////////////////////////
@@ -112,55 +114,6 @@ process.on('uncaughtException', function (er) {
   });
 });
 
-
-///////////////////////////////////////////
-//////////Server Utilities ///////////////
-//////////////////////////////////////////
-const normalizePort = (val) => {
-  const port = parseInt(val, 10)
-
-  if (isNaN(port)) {
-    // Named pipe
-    return val
-  }
-
-  if (port >= 0) {
-    // Port number
-    return port
-  }
-
-  return false
-}
-
-const onError = (error)=> {
-  if (error.syscall !== 'listen') {
-    throw error
-  }
-
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port
-
-  // Handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
-      process.exit(1)
-      break
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
-      process.exit(1)
-      break
-    default:
-      throw error
-  }
-}
-
-const onListening = () => {
-  const addr = app.address()
-  const uri = typeof addr === 'string' ? addr : `http://localhost:${addr.port}`
-  console.log(`Listening on ${uri}`)
-}
 
 //////////////////////////////////////////////////////
 ////////// Register and Config Routes ///////////////
