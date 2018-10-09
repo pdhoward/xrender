@@ -3,6 +3,7 @@
 const marked =              require('marked')
 const querystring =         require('querystring')
 const { translate } =       require('../i18n/i18n')
+const { g, b, gr, r, y } =  require('../console');
 
 function isCustomCredentials (settings) {
   const spaceId = process.env.CONTENTFUL_SPACE_ID
@@ -75,6 +76,7 @@ module.exports.updateSettingsQuery = updateSettingsQuery
 //////////Server Utilities ///////////////
 //////////////////////////////////////////
 module.exports.normalizePort = (val) => {
+ 
   const port = parseInt(val, 10)
 
   if (isNaN(port)) {
@@ -90,34 +92,5 @@ module.exports.normalizePort = (val) => {
   return false
 }
 
-module.exports.onError = (error) => {
-  if (error.syscall !== 'listen') {
-    throw error
-  }
-
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port
-
-  // Handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges')
-      process.exit(1)
-      break
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
-      process.exit(1)
-      break
-    default:
-      throw error
-  }
-}
-
-module.exports.onListening = () => {
-  const addr = app.address()
-  const uri = typeof addr === 'string' ? addr : `http://localhost:${addr.port}`
-  console.log(`Listening on ${uri}`)
-}
 
 

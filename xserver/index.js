@@ -30,9 +30,7 @@ const { g, b, gr, r, y } =    require('../console');
 const { translate, 
         initializeTranslations, 
         setFallbackLocale } = require('../i18n/i18n')
-const { normalizePort, 
-        onError,
-        onListening }       = require('../handlers/helpers')
+const { normalizePort}      = require('../handlers/helpers')
 
 // Express app
 const app = express();
@@ -137,9 +135,6 @@ require('../routes/errpage')(errpage)
 ///////////////////////////// API CATALOGUE /////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-// serve client
-//app.get('/js/bundle.js', browserifier);
-
 // update api with additional data
 app.use(apiprep);
 
@@ -157,6 +152,7 @@ app.use(errpage)
 
 const port = normalizePort(process.env.VCAP_APP_PORT || process.env.PORT);
 
-app.listen(port);
-app.on('error', onError)
-app.on('listening', onListening)
+app.listen(port, () => {
+  console.log(g(`Listening on ${port}`))
+});
+
