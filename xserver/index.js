@@ -14,9 +14,12 @@ const express =               require('express');
 const browserify =            require('browserify-middleware');
 const spreadplugin =          require('babel-plugin-transform-object-rest-spread');
 const bodyParser =            require('body-parser');
+const cookieParser = require('cookie-parser')
 const path =                  require('path');
 const cors =                  require('cors');
 const favicon =               require('serve-favicon');
+const logger = require('morgan')
+const helmet = require('helmet')
 const transport =             require('../config/gmail');
 const { g, b, gr, r, y } =    require('../console');
 
@@ -27,8 +30,11 @@ const app = express();
 ////////////////////  Register Middleware       /////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
+app.use(logger('dev'))
+app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser())
 app.set('views', path.join(__dirname, '..', 'src'));
 app.set('view engine', 'js');
 app.engine('js', require('express-react-views').createEngine());
