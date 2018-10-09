@@ -135,7 +135,7 @@ app.use(apiprep);
 app.use(apitest);
 
 // trace via breadcrumbs
-//app.use(breadcrumb())
+app.use(breadcrumb())
 
 // home page
 app.get('/', home);
