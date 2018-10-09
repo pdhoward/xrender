@@ -35,11 +35,8 @@ module.exports.getCourses = async (request, response, next) => {
   }
 
   categories = await getCategories(response.locals.currentLocale.code, response.locals.currentApi.id)
-  response.render('courses', {
-    title: `${translate('allCoursesLabel', response.locals.currentLocale.code)} (${courses.length})`,
-    categories,
-    courses
-  })
+  console.log("-------------------courses------------------")
+  console.log(categories)
 }
 
 /**
@@ -84,7 +81,8 @@ module.exports.getCourse = async (request, response, next) => {
   // Enhance the breadcrumbs with the course
   enhanceBreadcrumb(request, course)
 
-  response.render('course', {title: course.fields.title, course, lesson, lessons, lessonIndex, visitedLessons})
+  console.log("-------------------course------------------")
+  console.log(course)
 }
 
 /**
@@ -117,7 +115,8 @@ module.exports.getCoursesByCategory = async (request, response, next) => {
     courses = await attachEntryStateToCourses(courses)
   }
 
-  response.render('courses', { title: `${activeCategory.fields.title} (${courses.length})`, categories, courses })
+  console.log("-------------------courses------------------")
+  console.log(categories)
 }
 
 /**
@@ -157,14 +156,8 @@ module.exports.getLesson = async (request, response, next) => {
   enhanceBreadcrumb(request, course)
   enhanceBreadcrumb(request, lesson)
 
-  response.render('course', {
-    title: `${course.fields.title} | ${lesson.fields.title}`,
-    course,
-    lesson,
-    lessons,
-    nextLesson,
-    visitedLessons
-  })
+  console.log("------------------lesson---------------")
+  console.log(lesson)
 }
 
 function attachEntryStateToCourses (courses) {

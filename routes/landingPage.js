@@ -31,5 +31,6 @@ module.exports.getLandingPage = async (request, response, next) => {
   if (shouldAttachEntryState(response)) {
     landingPage = await attachEntryState(landingPage)
   }
-  response.render('landingPage', { title: pathname, landingPage })
+  console.log("------------------landing page--------------")
+  console.log(landingPage)
 }

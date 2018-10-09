@@ -22,14 +22,8 @@ async function renderSettings (response, opts) {
     // No need to throw here.
   }
 
-  response.render('settings', {
-    title: translate('settingsLabel', response.locals.currentLocale.code),
-    errors: {},
-    hasErrors: false,
-    success: false,
-    space,
-    ...opts
-  })
+  console.log("---------------settings--------------")
+  console.log(space)
 }
 
 /**
