@@ -20,18 +20,19 @@ const cors =                  require('cors');
 const favicon =               require('serve-favicon');
 const logger =                require('morgan')
 const helmet =                require('helmet')
+const querystring =           require('querystring')
 const settings =              require('../lib/settings')
-const helpers =               require('./helpers')
-const { updateCookie } =      require('./lib/cookies')
-const breadcrumb =            require('./lib/breadcrumb')
-const { catchErrors } =       require('./handlers/errorHandlers')
+const helpers =               require('../helpers')
+const { updateCookie } =      require('../lib/cookies')
+const breadcrumb =            require('../lib/breadcrumb')
+const { catchErrors } =       require('../handlers/errorHandlers')
 const transport =             require('../config/gmail');
 const { g, b, gr, r, y } =    require('../console');
 const { translate, 
         initializeTranslations, 
-        setFallbackLocale } = require('./i18n/i18n')
+        setFallbackLocale } = require('../i18n/i18n')
 const { getSpace, 
-        getLocales } =        require('./services/contentful')
+        getLocales } =        require('../services/contentful')
 
 // Express app
 const app = express();
@@ -97,50 +98,6 @@ app.use(function (req, res, next) {
 //// make all data visible for views to consume  /////
 /////////////////////////////////////////////////////
 
-app.use(catchErrors(async function (request, response, next) {
-  response.locals.baseUrl = `${request.protocol}://${request.headers.host}`
-  // Get enabled locales from Contentful
-  response.locals.locales = [{ code: 'en-US', name: 'U.S. English' }]
-  response.locals.currentLocale = response.locals.locales[0]
-  // Inject custom helpers
-  response.locals.helpers = helpers
-
-  // Make query string available in templates to render links properly
-  const cleanQuery = helpers.cleanupQueryParameters(request.query)
-  const qs = querystring.stringify(cleanQuery)
-
-  response.locals.queryString = qs ? `?${qs}` : ''
-  response.locals.queryStringSettings = response.locals.queryString
-  response.locals.query = request.query
-  response.locals.currentPath = request.path
-
-  // Initialize translations and include them on templates
-  initializeTranslations()
-  response.locals.translate = translate
-
-  // Set active api based on query parameter
-  const apis = [
-    {
-      id: 'cda',
-      label: translate('contentDeliveryApiLabel', response.locals.currentLocale.code)
-    },
-    {
-      id: 'cpa',
-      label: translate('contentPreviewApiLabel', response.locals.currentLocale.code)
-    }
-  ]
-
-  // Set currently used api
-  response.locals.currentApi = apis
-    .find((api) => api.id === (request.query.api || 'cda'))
-
-  // Fall back to delivery api if an invalid API is passed
-  if (!response.locals.currentApi) {
-    response.locals.currentApi = apis.find((api) => api.id === 'cda')
-  }
-
-  next()
-}))
 
 // Test space connection and attach space related data for views if possible
 app.use(catchErrors(async function (request, response, next) {
