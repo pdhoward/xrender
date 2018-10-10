@@ -22,9 +22,10 @@ module.exports.getLandingPage = async (request, response, next) => {
   let pathname = url.parse(request.url).pathname.split('/').filter(Boolean)[0]
   pathname = pathname || 'home'
 
-  //hello-contentful
+  //pathname = 'hello-contentful'
   // REFACTOR
   pathname = 'home'
+
 
   console.log(" landing page insights ")
   console.log(`pathname is ${pathname}`)

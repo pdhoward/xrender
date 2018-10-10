@@ -24,6 +24,7 @@ async function renderSettings (response, opts) {
 
   console.log("---------------settings--------------")
   console.log(space)
+  return space
 }
 
 /**
@@ -48,12 +49,14 @@ module.exports.getSettings = async (request, response, next) => {
 
   const errors = generateErrorDictionary(errorList)
 
-  await renderSettings(response, {
+  let settingsPage = await renderSettings(response, {
     settings,
     errors,
     hasErrors: errorList.length > 0,
     success: isCustomCredentials(settings) && errorList.length === 0
   })
+
+  response.json(settingsPage)
 }
 
 /**

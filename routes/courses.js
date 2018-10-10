@@ -7,13 +7,13 @@ const {
   getCourse,
   getCategories,
   getCoursesByCategory
-} = require('./../services/contentful')
+} =                             require('./../services/contentful')
 
-const attachEntryState = require('../lib/entry-state')
-const enhanceBreadcrumb = require('../lib/enhance-breadcrumb')
-const shouldAttachEntryState = require('../lib/should-attach-entry-state')
-const { updateCookie } = require('../lib/cookies')
-const { translate } = require('../i18n/i18n')
+const attachEntryState =        require('../lib/entry-state')
+const enhanceBreadcrumb =       require('../lib/enhance-breadcrumb')
+const shouldAttachEntryState =  require('../lib/should-attach-entry-state')
+const { updateCookie } =        require('../lib/cookies')
+const { translate } =           require('../i18n/i18n')
 
 /**
  * Renders courses list when `/courses` route is requested
@@ -37,6 +37,7 @@ module.exports.getCourses = async (request, response, next) => {
   categories = await getCategories(response.locals.currentLocale.code, response.locals.currentApi.id)
   console.log("-------------------courses------------------")
   console.log(categories)
+  response.json(categories)
 }
 
 /**
