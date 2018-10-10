@@ -11,6 +11,7 @@ require('dotenv').config({
 ///////////////////////////////////////////////////////////
 
 const express =               require('express');
+const pretty =                require('express-prettify');
 const browserify =            require('browserify-middleware');
 const spreadplugin =          require('babel-plugin-transform-object-rest-spread');
 const bodyParser =            require('body-parser');
@@ -49,6 +50,7 @@ app.use('/img', express.static(path.resolve(__dirname, '..', 'public/assets/img'
 app.use(express.static(path.join(__dirname, '..', 'node_modules/semantic-ui/dist')));
 app.use(favicon(path.join(__dirname, '..', '/public/assets/favicon.ico')));
 app.use(cors());
+app.use(pretty({query: 'pretty'}))
 
 app.use(settings)    // initialize app settings based on env variables
 

@@ -22,6 +22,10 @@ module.exports.getLandingPage = async (request, response, next) => {
   let pathname = url.parse(request.url).pathname.split('/').filter(Boolean)[0]
   pathname = pathname || 'home'
 
+  //hello-contentful
+  // REFACTOR
+  pathname = 'home'
+
   console.log(" landing page insights ")
   console.log(`pathname is ${pathname}`)
   console.log(`code is ${response.locals.currentLocale.code}`)
@@ -38,5 +42,6 @@ module.exports.getLandingPage = async (request, response, next) => {
   }
   console.log("------------------landing page--------------")
   console.log(landingPage)
-  response.json({"msg": "life is very good"})
+  
+  response.json(landingPage)
 }
