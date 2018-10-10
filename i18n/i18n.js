@@ -8,6 +8,8 @@ let fallbackLocale = null
  * Initializes translation dictionary with contents from /public/locales
  */
 function initializeTranslations () {
+
+  console.log("Entered Initial Translations")
   if (translations) {
     return
   }
@@ -31,6 +33,7 @@ function initializeTranslations () {
     console.error('Error loading localization files:')
     console.error(error)
   }
+  console.log(translations)
 }
 
 /**
@@ -49,6 +52,8 @@ function setFallbackLocale (locale) {
  * @returns string
  */
 function translate (symbol, locale = 'en-US') {
+  console.log("Entered Translate")
+  console.log(symbol)
   const localeDict = translations[locale]
   let translatedValue
 
@@ -63,6 +68,7 @@ function translate (symbol, locale = 'en-US') {
   if (!translatedValue) {
     return `Translation not found for ${symbol}`
   }
+  console.log(translatedValue)
 
   return translatedValue
 }

@@ -21,9 +21,7 @@ const apiprep = (router) => {
       response.locals.locales = [{ code: 'en-US', name: 'U.S. English' }]
       response.locals.currentLocale = response.locals.locales[0]
       // Inject custom helpers
-      response.locals.helpers = helpers
-      console.log("---------------------------------------")
-      console.log(JSON.stringify(response.locals.locales))
+      response.locals.helpers = helpers      
 
       // Make query string available in templates to render links properly
       const cleanQuery = helpers.cleanupQueryParameters(request.query)
