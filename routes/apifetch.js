@@ -23,7 +23,7 @@ const apifetch = (router) => {
 
     if (res.headersSent) return next();   // exit if headers had been sent
       // GET the home landing page
-      getLandingPage()
+      getLandingPage(req, res, next)
 
       // Courses routes
       //catchErrors(getCourses)      
