@@ -27,6 +27,7 @@ const apifetch = (router) => {
           getLandingPage(req, res, next)
           getCourses(req, res, next)
           getSettings(req, res, next)
+          getImprint(req, res, next)   // intended to translate a pug page
 
      */
 
@@ -41,7 +42,7 @@ const apifetch = (router) => {
       //catchErrors(postSettings)
 
       // Imprint route
-      getImprint(req, res, next)
+      
   });
 // Display settings in case of invalid credentials
   router.all('*', async (request, response, next) => {
