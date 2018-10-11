@@ -11,7 +11,7 @@ const { writeFileSync } = require('fs')
 
 console.log(`
   To set up this project you need to provide your Space ID
-  and the belonging API access tokens.
+  and the associated API access tokens.
 
   You can find all the needed information in your Contentful space under:
 
@@ -22,7 +22,7 @@ console.log(`
   )}
 
   The ${chalk.green('Content Delivery API Token')}
-    will be used to ship published production-ready content in your Gatsby app.
+    will be used to ship published production-ready content in your web app.
 
   The ${chalk.green('Content Preview API Token')}
     will be used to show not published data in your development environment.
@@ -83,7 +83,7 @@ inquirer
   .then((_, error) => {
     console.log(
       `All set! You can now run ${chalk.yellow(
-        'commerce web app'
+        'bookshop web app'
       )} to see it in action.`
     )
   })
