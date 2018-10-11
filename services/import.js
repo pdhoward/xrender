@@ -19,15 +19,17 @@ const client = contentful.createClient({
 
 const postData = (req, res, next) => {
 
-    async function postEntries(books) {
+    const postEntries = async (books) => {
         const promises = books.map(b => createEntry(b))
         const entries = await Promise.all(promises)
         return entries
-    }   
+    }
 
-    let result = postEntries(books)
-    console.log("SUCCESS")
-    res.json(result)
+    postEntries(books).then((e) => {
+        console.log("SUCCESS")
+        res.json(e)
+    })
+    
 
 }
 
