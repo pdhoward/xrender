@@ -20,43 +20,49 @@ const client = contentful.createClient({
 const postData = (req, res, next) => {
 
     const postEntries = async (books) => {
-        const promises = books.map(b => createEntry(b))
-        const entries = await Promise.all(promises)
-        return entries
+        const dataArray = books.map(async b => { const response = await createEntry(b)
+        return response 
+    })
+        const newArray = await Promise.all(dataArray)       
+        return newArray
     }
 
-    postEntries(books).then((e) => {
+    const createEntry = (b) => {
+        return new Promise((resolve, reject) => {
+
+            client.getSpace(process.env.CONTENTFUL_SPACE_ID)
+                .then((space) => space.getEnvironment('master'))
+                .then((environment) => environment.createEntry('test', {
+                    fields: {
+                        id: {
+                            'en-US': b.id
+                        },
+                        title: {
+                            'en-US': b.title
+                        },
+                        price: {
+                            'en-US': b.price
+                        },
+                        category: {
+                            'en-US': b.category
+                        }
+                    }
+                }))
+                .then((entry) => {
+                    entry.publish()
+                    console.log(entry)
+                    resolve(entry)
+                    return
+                })
+                .catch(console.error)
+        })
+    }
+
+    postEntries(books).then((newArray) => {
         console.log("SUCCESS")
-        res.json(e)
+        let returnArray = [...newArray]
+        res.json(returnArray)
     })
-    
-
-}
-
-const createEntry = (b) => {
-   
-    client.getSpace(process.env.CONTENTFUL_SPACE_ID)
-        .then((space) => space.getEnvironment('master'))
-        .then((environment) => environment.createEntry('test', {
-            fields: {
-                id: {
-                    'en-US': b.id
-                },
-                title: {
-                    'en-US': b.title
-                },
-                price: {
-                    'en-US': b.price
-                },
-                category: {
-                    'en-US': b.category
-                }
-            }
-        }))
-        .then((entry) => {
-            entry.publish()
-            console.log(entry)})
-        .catch(console.error)
 }
 
 module.exports = {
