@@ -6,18 +6,15 @@ require('dotenv').config();
 /////////////////////////////////////
 
 // note - not triggerd by a web page option - see test/content.test.js
-
-const contentful =              require('contentful');
+const contentful =              require('contentful-management');
 const { readFileSync } =        require('fs')
-const {books} =                 require('../src/components/data')
+const books =                   require('../src/components/data2')
 const exportFile =              require('../contentful/export.json')
 const { g, b, gr, r, y } =      require('../console');
 
 // space used tp test xrender ... more complex contentTypes
 const client = contentful.createClient({
-    space: process.env.CONTENTFUL_SPACE_ID,
-    accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
-    environment: "master"
+    accessToken: process.env.CONTENTFUL_MANAGEMENT_API
 })
 
 const postData = (req, res, next) => {
@@ -26,17 +23,19 @@ const postData = (req, res, next) => {
         const promises = books.map(b => createEntry(b))
         const entries = await Promise.all(promises)
         return entries
-    }
+    }   
 
     let result = postEntries(books)
     console.log("SUCCESS")
-    res.json(entries)
+    res.json(result)
 
 }
 
 const createEntry = (b) => {
-    client.getSpace('process.env.CONTENTFUL_SPACE_ID')
-        .then((space) => space.createEntry('TEST', {
+   
+    client.getSpace(process.env.CONTENTFUL_SPACE_ID)
+        .then((space) => space.getEnvironment('master'))
+        .then((environment) => environment.createEntry('test', {
             fields: {
                 id: {
                     'en-US': b.id
@@ -52,7 +51,9 @@ const createEntry = (b) => {
                 }
             }
         }))
-        .then((entry) => console.log(entry))
+        .then((entry) => {
+            entry.publish()
+            console.log(entry)})
         .catch(console.error)
 }
 

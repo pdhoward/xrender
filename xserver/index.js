@@ -149,6 +149,9 @@ app.get('/', home);
 // fetch
 app.get('/api/fetch', apifetch);
 
+// post
+app.get('/api/post', apipost);
+
 // Catch 404 and forward to error handler
 app.use(nopage)
 
