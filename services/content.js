@@ -16,10 +16,9 @@ const client = contentful.createClient({
   environment: "master"
 })
 
-const getContent = (router) => {
+const getContent = () => {
 
-  router.use(function(req, res, next) {
-
+  console.log("HERE")
 
     console.log(g('\nWelcome to the Contentful \n'))
     console.log('Demonstrating Contentful CDA\n')
@@ -112,7 +111,8 @@ const getContent = (router) => {
     //res.json({msg: "request completed"})
     //res.end()
 
-  })
+ 
 }
 
-module.exports = getContent
+module.exports = {
+  getContent: getContent}
