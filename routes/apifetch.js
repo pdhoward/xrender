@@ -13,6 +13,7 @@ const { getSettings,
         postSettings } =      require('./settings')
 const { getLandingPage } =    require('./landingPage')
 const { getImprint } =        require('./imprint')
+const { getContent } =        require('../services/content')
 
 
 const apifetch = (router) => {
@@ -30,6 +31,7 @@ const apifetch = (router) => {
           getImprint(req, res, next)   // intended to translate a pug page
 
      */
+          getContent(router)
 
       // Courses routes
       //   
