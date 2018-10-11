@@ -2,12 +2,12 @@
 
 // See prompt as an alternative to inquirer
 
-const spaceImport = require('contentful-import')
-const exportFile = require('../contentful/export.json')
-const inquirer = require('inquirer')
-const chalk = require('chalk')
-const path = require('path')
-const { writeFileSync } = require('fs')
+const spaceImport =           require('contentful-import')
+const exportFile =            require('../contentful/export.json')
+const inquirer =              require('inquirer')
+const chalk =                 require('chalk')
+const path =                  require('path')
+const { writeFileSync } =     require('fs')
 
 console.log(`
   To set up this project you need to provide your Space ID

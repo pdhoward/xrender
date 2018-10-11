@@ -5,12 +5,13 @@ require('dotenv').config();
 ////////   upload bookstore    ///////
 /////////////////////////////////////
 
-
 // note - not triggerd by a web page option - see test/content.test.js
-const contentful = require('contentful');
-const { g, b, gr, r, y } = require('../console');
-const Table = require('cli-table2')
 
+const contentful =              require('contentful');
+const { readFileSync } =        require('fs')
+const {books} =                 require('../src/components/data')
+const exportFile =              require('../contentful/export.json')
+const { g, b, gr, r, y } =      require('../console');
 
 // space used tp test xrender ... more complex contentTypes
 const client = contentful.createClient({
@@ -19,22 +20,46 @@ const client = contentful.createClient({
     environment: "master"
 })
 
+const postData = (req, res, next) => {
 
-////////////////////////////
-client.getSpace('<space-id>')
-    .then((space) => space.createEntry('<content-type-name>', {
-        fields: {
-            name: {
-                'en-US': d.TheName
-            },
-            age: {
-                'en-US': d.TheAge
+    async function postEntries(books) {
+        const promises = books.map(b => createEntry(b))
+        const entries = await Promise.all(promises)
+        return entries
+    }
+
+    let result = postEntries(books)
+    console.log("SUCCESS")
+    res.json(entries)
+
+}
+
+const createEntry = (b) => {
+    client.getSpace('process.env.CONTENTFUL_SPACE_ID')
+        .then((space) => space.createEntry('TEST', {
+            fields: {
+                id: {
+                    'en-US': b.id
+                },
+                title: {
+                    'en-US': b.title
+                },
+                price: {
+                    'en-US': b.price
+                },
+                category: {
+                    'en-US': b.category
+                }
             }
-        }
-	}))
-    .then((entry) => console.log(entry))
-    .catch(console.error)
+        }))
+        .then((entry) => console.log(entry))
+        .catch(console.error)
+}
 
+module.exports = {
+    postData: postData
+}
+/*
 // process an image for an entry
 
 client.getSpace(CONTENTFUL_SPACE).then((space) => {
@@ -65,4 +90,4 @@ client.getSpace(CONTENTFUL_SPACE).then((space) => {
             });
     });
 });
-
+*/
