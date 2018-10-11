@@ -48,8 +48,6 @@ client.getSpace(CONTENTFUL_SPACE).then((space) => {
 });
 
 
-
-
 // minimal json for using conteful import ... includes asset
 {
     "contentTypes": [

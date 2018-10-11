@@ -29,8 +29,6 @@ const client = contentful.createClient({
 
 const getContent = (req, res, next) => {
 
-  console.log("HERE")
-
     console.log(g('\nWelcome to the Contentful \n'))
     console.log('Demonstrating Contentful CDA\n')
 

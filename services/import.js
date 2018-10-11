@@ -1,4 +1,23 @@
 
+'use strict';
+require('dotenv').config();
+///////////////////////////////////////
+////////   upload bookstore    ///////
+/////////////////////////////////////
+
+
+// note - not triggerd by a web page option - see test/content.test.js
+const contentful = require('contentful');
+const { g, b, gr, r, y } = require('../console');
+const Table = require('cli-table2')
+
+
+// space used tp test xrender ... more complex contentTypes
+const client = contentful.createClient({
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
+    environment: "master"
+})
 
 
 ////////////////////////////
