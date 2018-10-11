@@ -31,7 +31,7 @@ const apifetch = (router) => {
           getImprint(req, res, next)   // intended to translate a pug page
 
      */
-          getContent()
+          getContent(req, res, next)
 
       // Courses routes
       //   

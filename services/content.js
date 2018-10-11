@@ -10,13 +10,24 @@ const contentful =            require('contentful');
 const { g, b, gr, r, y } =    require('../console');
 const Table =                 require('cli-table2')
 
+// space used to test discovery and render
+/*
 const client = contentful.createClient({
   space: process.env.CONTENT_SPACEID,
   accessToken: process.env.CONTENT_DELIVERY_ID,
   environment: "master"
 })
+*/
 
-const getContent = () => {
+// space used tp test xrender ... more complex contentTypes
+const client = contentful.createClient({
+  space: process.env.CONTENTFUL_SPACE_ID,
+  accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
+  environment: "master"
+})
+
+
+const getContent = (req, res, next) => {
 
   console.log("HERE")
 
@@ -77,7 +88,9 @@ const getContent = () => {
             table.push([entry.sys.id, entry.fields[contentType.displayField] || '[empty]'])
           })
           console.log(table.toString())
-          res.send(table.toString())
+          if (res.headersSent) return;
+          res.json(entries)
+          //res.send(table.toString())
           res.end()
         })
       }))
