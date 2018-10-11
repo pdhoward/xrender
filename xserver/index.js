@@ -117,7 +117,8 @@ process.on('uncaughtException', function (er) {
 const apiprep =             express.Router()
 const apitest =             express.Router()
 const home =                express.Router()
-const apifetch =             express.Router()
+const apifetch =            express.Router()
+const apipost =             express.Router()
 const nopage =              express.Router()
 const errpage =             express.Router()
 
@@ -125,6 +126,7 @@ require('../routes/apiprep')(apiprep)
 require('../routes/apitest')(apitest)
 require('../routes/home')(home)
 require('../routes/apifetch')(apifetch)
+require('../routes/apipost')(apipost)
 require('../routes/nopage')(nopage)
 require('../routes/errpage')(errpage)
 
