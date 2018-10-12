@@ -29,6 +29,8 @@ const postData = (req, res, next) => {
     const postEntries = async (books) => {
         // create entries for bookstore
         const dataArray = books.map(async (b) => {
+          console.log(r(`executing entry creation `))
+          console.log(JSON.stringify(b))
           const response = await createEntry(b)
           return response 
         })        
@@ -36,6 +38,8 @@ const postData = (req, res, next) => {
 
         // create media file for each entry that has been created
         const assetArray = newDataArray.map(async (a) => {
+            console.log(g(`executing asset creation`))
+            console.log(JSON.stringify(a, null, 2))
             const response = await createAsset(a)
             return response
         })
@@ -82,18 +86,17 @@ const postData = (req, res, next) => {
     }
 
     const createAsset = (a) => {
+
+        let fileNM = regexp.exec(a.fields.path["en-US"])[0]    // extract path name from entry object
+        let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')  // find path to image
+        let pathNM = uploadNM + "\\" + fileNM    // create path name
+        console.log(pathNM)
+
         return new Promise((resolve, reject) => {
 
             client.getSpace(process.env.CONTENTFUL_SPACE_ID)
                 .then((space) => space.getEnvironment('master'))
-                .then((environment) => {
-
-                    let fileNM = regexp.exec(a.fields.path["en-US"])[0]    // extract path name from entry object
-                    let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')  // find path to image
-                    let pathNM = uploadNM + "\\" + fileNM    // create path name
-                    console.log(pathNM)
-
-                    environment.createAsset({
+                .then((environment) => environment.createAssetFromFiles({
                         fields: {
                             file: {
                                 'en-US': {
@@ -103,19 +106,17 @@ const postData = (req, res, next) => {
                                 }
                             }
                         }
-                    })
-                })
+                    }))
                 .then(asset => asset.processForAllLocales())
                 .then(asset => asset.publish())
                 .then(function (asset) {
-                    // assign uploaded image as an entry field
-                    a.fields["image"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
+                    // assign uploaded image as an entry field                    
+                    a.fields["thumbnail"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
                     a.update()
-
+                    resolve(a)
                 })
                 .catch(console.error)
-                })
-               
+                })               
         }
         
 
