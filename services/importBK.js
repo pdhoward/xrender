@@ -26,21 +26,16 @@ let regexp = /[^ /\\&\?]+\.\w{3,4}(?=([\?&].*$|$))/
 const postData = (req, res, next) => {
     return new Promise((resolve, reject) => {  
 
-    const postEntries = async (books) => {
-        // create entries for bookstore
+    const postEntries = async (books) => {        
         const dataArray = books.map(async (b) => {
           const response = await createEntry(b)
           return response 
         })        
-        const newDataArray = await Promise.all(dataArray)
-
-        // retrieve all entries that were just posted
-        const updatedEntries = await updateEntry()
-
-        return newDataArray
+        const newArray = await Promise.all(dataArray)       
+        return newArray
     }
 
-    const createEntry = (b) => {     
+    const createEntry = (b) => {       
         return new Promise((resolve, reject) => {          
 
             client.getSpace(process.env.CONTENTFUL_SPACE_ID)
@@ -67,26 +62,13 @@ const postData = (req, res, next) => {
                 .then((entry) => {
                     // publish entry
                     entry.publish()
-                    resolve(entry)
-                    return 
-                    
-                })
-                .catch(console.error)
-                
-        })
-    }
-
-    const updateEntry = (b) => {
-        return new Promise((resolve, reject) => {
-
-            client.getSpace(process.env.CONTENTFUL_SPACE_ID)
-                .then((space) => space.getEnvironment('master'))
-                .then((environment) => {
 
                     let fileNM = regexp.exec(entry.fields.path["en-US"])[0]
-                    let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')
+                    let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')                    
                     let pathNM = uploadNM + "\\" + fileNM
                     console.log(pathNM)
+
+                    /*
 
                     environment.createAsset({
                         fields: {
@@ -99,22 +81,26 @@ const postData = (req, res, next) => {
                             }
                         }
                     })
-                })
-                .then(asset => asset.processForAllLocales())
-                .then(asset => asset.publish())
-                .then(function (asset) {
-                    // assign uploaded image as an entry field
-                    entry.fields["image"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
-                    entry.update()
+                        .then(asset => asset.processForAllLocales())
+                        .then(asset => asset.publish())
+                        .then(function (asset) {
 
+                            // assign uploaded image as an entry field
+                            entry.fields["image"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
+                            entry.update()
+                           
+                        });
+                        */
+                    resolve(entry)
+                    return 
+                    
                 })
                 .catch(console.error)
-                })
-               
-        }
-        
+                
+        })
+    }
 
-    postEntries(books).then((newArray) => {
+    postEntries(books).then((newArray) => {        
         let returnArray = [...newArray]
         res.json(returnArray)
         resolve({"msg": "success"})
