@@ -8,7 +8,7 @@ require('dotenv').config();
 // note - not triggerd by a web page option - see test/content.test.js
 const contentful =              require('contentful-management');
 const { readFileSync } =        require('fs')
-const books =                   require('../src/components/data3')
+const books =                   require('../src/components/data2')
 const exportFile =              require('../contentful/export.json')
 const { g, b, gr, r, y } =      require('../console');
 
@@ -18,26 +18,18 @@ const client = contentful.createClient({
 })
 
 const postData = (req, res, next) => {
-    return new Promise((resolve, reject) => {
-    console.log(r(`Entered importjs .............`))
+    return new Promise((resolve, reject) => {  
 
-    const postEntries = async (books) => {
-        console.log(r(`Entered postentries .............`))
+    const postEntries = async (books) => {        
         const dataArray = books.map(async (b) => {
           const response = await createEntry(b)
           return response 
-        })
-        console.log(r(`-----------------completed map ---------------`))  
-        const newArray = await Promise.all(dataArray)
-        console.log(r(`-----------------completed newArray-------------`))
-        console.log(newArray)
-        console.log(r(`-----------------------------------------------`))
+        })        
+        const newArray = await Promise.all(dataArray)       
         return newArray
     }
 
-    const createEntry = (b) => {
-        console.log(r(`Entered createEntry .............`))
-        console.log(b)
+    const createEntry = (b) => {       
         return new Promise((resolve, reject) => {
 
             client.getSpace(process.env.CONTENTFUL_SPACE_ID)
@@ -59,8 +51,7 @@ const postData = (req, res, next) => {
                     }
                 }))
                 .then((entry) => {
-                    entry.publish()
-                    console.log(entry)
+                    entry.publish()                  
                     resolve(entry)
                     return
                 })
