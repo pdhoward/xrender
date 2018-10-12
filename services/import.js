@@ -34,8 +34,13 @@ const postData = (req, res, next) => {
         })        
         const newDataArray = await Promise.all(dataArray)
 
-        // retrieve all entries that were just posted
-        const updatedEntries = await updateEntry()
+        // create media file for each entry that has been created
+        const assetArray = newDataArray.map(async (a) => {
+            const response = await createAsset(a)
+            return response
+        })
+
+        const newUpdatedArray = await Promise.all(assetArray)
 
         return newDataArray
     }
@@ -76,16 +81,16 @@ const postData = (req, res, next) => {
         })
     }
 
-    const updateEntry = (b) => {
+    const createAsset = (a) => {
         return new Promise((resolve, reject) => {
 
             client.getSpace(process.env.CONTENTFUL_SPACE_ID)
                 .then((space) => space.getEnvironment('master'))
                 .then((environment) => {
 
-                    let fileNM = regexp.exec(entry.fields.path["en-US"])[0]
-                    let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')
-                    let pathNM = uploadNM + "\\" + fileNM
+                    let fileNM = regexp.exec(a.fields.path["en-US"])[0]    // extract path name from entry object
+                    let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')  // find path to image
+                    let pathNM = uploadNM + "\\" + fileNM    // create path name
                     console.log(pathNM)
 
                     environment.createAsset({
@@ -104,8 +109,8 @@ const postData = (req, res, next) => {
                 .then(asset => asset.publish())
                 .then(function (asset) {
                     // assign uploaded image as an entry field
-                    entry.fields["image"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
-                    entry.update()
+                    a.fields["image"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
+                    a.update()
 
                 })
                 .catch(console.error)
