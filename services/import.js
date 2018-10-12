@@ -7,8 +7,9 @@ require('dotenv').config();
 
 // note - not triggerd by a web page option - see test/content.test.js
 const contentful =              require('contentful-management');
-const { readFileSync } =        require('fs')
+const { createReadStream } =    require('fs')
 const url =                     require('url')
+const path =                    require('path')
 const books =                   require('../src/components/data3')
 const exportFile =              require('../contentful/export.json')
 const { g, b, gr, r, y } =      require('../console');
@@ -17,6 +18,10 @@ const { g, b, gr, r, y } =      require('../console');
 const client = contentful.createClient({
     accessToken: process.env.CONTENTFUL_MANAGEMENT_API
 })
+
+let regexp = /[^ /\\&\?]+\.\w{3,4}(?=([\?&].*$|$))/
+//let testurl = 'img/python/learn-python-the-hard-way.jpeg'
+//console.log(regexp.exec(testurl)[0])
 
 const postData = (req, res, next) => {
     return new Promise((resolve, reject) => {  
@@ -35,7 +40,7 @@ const postData = (req, res, next) => {
 
             client.getSpace(process.env.CONTENTFUL_SPACE_ID)
                 .then((space) => space.getEnvironment('master'))
-                .then((environment) => environment.createEntry('test', {
+                .then((environment) => environment.createEntry('bookstore', {
                     fields: {
                         id: {
                             'en-US': b.id
@@ -58,6 +63,12 @@ const postData = (req, res, next) => {
                     // publish entry
                     entry.publish()
 
+                    let fileNM = regexp.exec(entry.fields.path["en-US"])[0]
+                    let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')                    
+                    let pathNM = uploadNM + "\\" + fileNM
+                    console.log(pathNM)
+                    console.log(createReadStream(pathNM))
+
                     /*
                     environment.createAsset({
                         fields: {
@@ -65,7 +76,7 @@ const postData = (req, res, next) => {
                                 'en-US': {
                                     contentType: 'image/jpeg',
                                     fileName: 'test.jpg',
-                                    upload: 'http://www.example.com/test.jpg'
+                                    file: createReadStream('path/to/file.jpeg')
                                 }
                             }
                         }
