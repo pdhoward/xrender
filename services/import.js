@@ -96,27 +96,33 @@ const postData = (req, res, next) => {
 
             client.getSpace(process.env.CONTENTFUL_SPACE_ID)
                 .then((space) => space.getEnvironment('master'))
-                .then((environment) => environment.createAssetFromFiles({
-                        fields: {
-                            file: {
-                                'en-US': {
-                                    contentType: 'image/jpeg',
-                                    fileName: fileNM,
-                                    file: createReadStream(pathNM)
+                .then((environment) => {
+                    environment.getEntry(a.sys.id).then(function (entry) {
+
+                        environment.createAssetFromFiles({
+                            fields: {
+                                file: {
+                                    'en-US': {
+                                        contentType: 'image/jpeg',
+                                        fileName: fileNM,
+                                        file: createReadStream(pathNM)
+                                    }
                                 }
                             }
-                        }
-                    }))
-                .then(asset => asset.processForAllLocales())
-                .then(asset => asset.publish())
-                .then(function (asset) {
-                    // assign uploaded image as an entry field                    
-                    a.fields["thumbnail"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
-                    a.update()
-                    resolve(a)
-                })
-                .catch(console.error)
+                        })
+                        .then(asset => asset.processForAllLocales())
+                        .then(asset => asset.publish())
+                        .then(function (asset) {
+                            // assign uploaded image as an entry field                    
+                            entry.fields["thumbnail"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
+                            entry.update()
+                            resolve(entry)
+                        })
+                        .catch(console.error)
+
+                    })
                 })               
+            })            
         }
         
 
