@@ -29,6 +29,8 @@ experiment to demonstrate process for retrieving cms contentTypes. The 'services
 
 experiment to seed the cms bookstore using a json object and associated images. This demonstrates the ability to load a cms with data migrated from another site. Note that rate limits are encountered. Timers need to be inserted to slow down the process with significant data migrations
 
+4. / - index route renders the bookstore web page. 
+
 
 
 # License
