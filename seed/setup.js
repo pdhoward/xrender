@@ -1,4 +1,4 @@
-// Setup modified from https://github.com/contentful-userland/gatsby-contentful-starter
+
 
 // See prompt as an alternative to inquirer
 
