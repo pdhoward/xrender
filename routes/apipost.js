@@ -16,7 +16,10 @@ const apipost = (router) => {
 
     if (res.headersSent) return next();   // exit if headers had been sent     
     postData(req, res, next)
-    next()
+      .then((m) => {
+        console.log(m)
+        next()
+      })   
     
   })
 };

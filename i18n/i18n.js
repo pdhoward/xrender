@@ -51,6 +51,8 @@ function setFallbackLocale (locale) {
  * @returns string
  */
 function translate (symbol, locale = 'en-US') {
+  console.log("Inside of i18n Translate")
+  console.log(symbol)
   
   const localeDict = translations[locale]
   let translatedValue
@@ -66,6 +68,7 @@ function translate (symbol, locale = 'en-US') {
   if (!translatedValue) {
     return `Translation not found for ${symbol}`
   }
+  
   console.log(translatedValue)
 
   return translatedValue
