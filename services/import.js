@@ -8,7 +8,8 @@ require('dotenv').config();
 // note - not triggerd by a web page option - see test/content.test.js
 const contentful =              require('contentful-management');
 const { readFileSync } =        require('fs')
-const books =                   require('../src/components/data2')
+const url =                     require('url')
+const books =                   require('../src/components/data3')
 const exportFile =              require('../contentful/export.json')
 const { g, b, gr, r, y } =      require('../console');
 
@@ -45,13 +46,39 @@ const postData = (req, res, next) => {
                         price: {
                             'en-US': b.price
                         },
+                        path: {
+                            'en-US': b.thumbnail
+                        },
                         category: {
                             'en-US': b.category
                         }
                     }
                 }))
                 .then((entry) => {
-                    entry.publish()                  
+                    // publish entry
+                    entry.publish()
+
+                    /*
+                    environment.createAsset({
+                        fields: {
+                            file: {
+                                'en-US': {
+                                    contentType: 'image/jpeg',
+                                    fileName: 'test.jpg',
+                                    upload: 'http://www.example.com/test.jpg'
+                                }
+                            }
+                        }
+                    })
+                        .then(asset => asset.processForAllLocales())
+                        .then(asset => asset.publish())
+                        .then(function (asset) {
+
+                            // assign uploaded image as an entry field
+                            entry.fields["image"]["en-GB"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
+                            return entry.update()
+                        });
+                        */
                     resolve(entry)
                     return
                 })
@@ -70,9 +97,9 @@ const postData = (req, res, next) => {
 module.exports = {
     postData: postData
 }
-/*
-// process an image for an entry
 
+// process an image for an entry
+/*
 client.getSpace(CONTENTFUL_SPACE).then((space) => {
     // retrieve my Contentful space
 
