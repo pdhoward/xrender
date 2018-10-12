@@ -36,7 +36,7 @@ const postData = (req, res, next) => {
     }
 
     const createEntry = (b) => {       
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {          
 
             client.getSpace(process.env.CONTENTFUL_SPACE_ID)
                 .then((space) => space.getEnvironment('master'))
@@ -66,8 +66,10 @@ const postData = (req, res, next) => {
                     let fileNM = regexp.exec(entry.fields.path["en-US"])[0]
                     let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')                    
                     let pathNM = uploadNM + "\\" + fileNM
-                    console.log(patthNM)
-                    
+                    console.log(pathNM)
+
+                    /*
+
                     environment.createAsset({
                         fields: {
                             file: {
@@ -86,13 +88,15 @@ const postData = (req, res, next) => {
                             // assign uploaded image as an entry field
                             entry.fields["image"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
                             entry.update()
-                            resolve(entry)
-                            return
+                           
                         });
-                        
+                        */
+                    resolve(entry)
+                    return 
                     
                 })
                 .catch(console.error)
+                
         })
     }
 
