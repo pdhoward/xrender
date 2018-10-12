@@ -66,17 +66,15 @@ const postData = (req, res, next) => {
                     let fileNM = regexp.exec(entry.fields.path["en-US"])[0]
                     let uploadNM = path.resolve(__dirname, '..', 'public/assets/img')                    
                     let pathNM = uploadNM + "\\" + fileNM
-                    console.log(pathNM)
-                    console.log(createReadStream(pathNM))
-
-                    /*
+                    console.log(patthNM)
+                    
                     environment.createAsset({
                         fields: {
                             file: {
                                 'en-US': {
                                     contentType: 'image/jpeg',
-                                    fileName: 'test.jpg',
-                                    file: createReadStream('path/to/file.jpeg')
+                                    fileName: fileNM,
+                                    file: createReadStream(pathNM)
                                 }
                             }
                         }
@@ -86,12 +84,13 @@ const postData = (req, res, next) => {
                         .then(function (asset) {
 
                             // assign uploaded image as an entry field
-                            entry.fields["image"]["en-GB"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
-                            return entry.update()
+                            entry.fields["image"]["en-US"] = { "sys": { "id": asset.sys.id, "linkType": "Asset", "type": "Link" } };
+                            entry.update()
+                            resolve(entry)
+                            return
                         });
-                        */
-                    resolve(entry)
-                    return
+                        
+                    
                 })
                 .catch(console.error)
         })
