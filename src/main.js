@@ -1,15 +1,20 @@
 
-// this is effectively App.js
 
-import React from 'react';
-import {books} from './components/data';
-import Header from './components/Header';
-import BookList from './components/BookList';
-import CartList from './components/CartList';
+///////////////////////////////////////////////////////////////
+////////     demonstration commercial site            ////////
+//////             web client with cms integration    ///////
+////// c strategic machines 2018 all rights reserved ///////
+///////////////////////////////////////////////////////////
+
+import React, {Component}       from 'react';
+import {books}                  from './components/data';
+import Header                   from './components/Header';
+import BookList                 from './components/BookList';
+import CartList                 from './components/CartList';
 import 'isomorphic-fetch';
 //import './components/App.css';
 
-class Main extends React.Component {
+class Main extends Component {
   constructor(props){
     super(props);
     this.state={
