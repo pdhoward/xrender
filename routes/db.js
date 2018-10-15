@@ -6,8 +6,9 @@
 //////// process http calls for data   /////
 ////////////////////////////////////////////
 
-const bodyParser =  			require('body-parser')
-const api =         			require('../api')
+const bodyParser =            require('body-parser')
+const api =                   require('../api')
+const { g, b, gr, r, y } =    require('../console');
 
 const db = (router) => {
 
@@ -22,7 +23,7 @@ const db = (router) => {
    })
 
 	router.get('/', function(req, res, next) {
-		 console.log("-----------DB AGENTS ROUTE -----------")
+		 console.log(g("-----------DB AGENTS ROUTE -----------"))
 		api.getAll(req.token, function(response){
 			console.log("Get All Content Completed")
 			console.log(response)

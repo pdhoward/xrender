@@ -8,7 +8,7 @@
 import 'isomorphic-fetch';
 import React, {Component}       from 'react';
 import {books}                  from './components/data';
-//import * as api                 from './api';
+import * as api                 from './api';
 import Header                   from './components/Header';
 import BookList                 from './components/BookList';
 import CartList                 from './components/CartList';
@@ -114,17 +114,12 @@ class Main extends Component {
     });
   }
 
-    componentWillMount() {
-        console.log("component will mount")
-      
-    }
-
   componentDidMount() {
-      console.log("executing api to retrieve books")
-   // api.getAll().then((books) => {
+    console.log("executing api to retrieve books")
+    api.getAll().then((books) => {
     // this.setState({books})
-  //  console.log(books)
-  //  })   
+    console.log(books)
+    })   
   }
 
   render() {

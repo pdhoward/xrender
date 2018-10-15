@@ -5,17 +5,15 @@
 ///////////////////////////////////////////////////
 
 const uuidv1 =                  require('uuid/v1');
-const contentful =              require('contentful-management');
+const contentful =              require('contentful');
 const { g, b, gr, r, y } =      require('../console');
 
 // space id for the bookstore
 const client = contentful.createClient({
-    accessToken: process.env.CONTENTFUL_MANAGEMENT_API,
-    space: process.env.CONTENTFUL_SPACE_ID,    
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
     environment: "master"
 })
-
-
 
 ////////////////////////////////////
 ///////   get all entries    //////
@@ -23,10 +21,8 @@ const client = contentful.createClient({
 const getAll = async (token, cb) => {
 
   let response = await getContent()
-  return response
-  
+  return response  
 }
-
 
 /////////////////////////////////
 ///////   update db   //////////
@@ -56,15 +52,18 @@ const deleteEntry = async(token, cb) => {
 const getContent = () => {
     console.log(g('\nRetrieving CMS Content \n'))  
    
-    return client.getContentTypes()
+    client.getContentTypes()
         .then((response) => {
 
-            let contentType = response.filter(c => c.name="bookstore")
+            console.log(response)
 
-            return client.getEntries({
+            let contentType = response.items.filter(c => c.name="bookstore")
+
+            client.getEntries({
                 content_type: contentType[0].sys.id
-            })
-                .then((response) => response.items)
+                })
+                .then((response) => {
+                    return response.items })
                 .catch((error) => {
                     console.log(r(`\nError occurred while fetching Entries for ${y(contentType[0].name)}:`))
                     console.error(error)

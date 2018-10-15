@@ -34,12 +34,14 @@ console.log(JSON.stringify(headers))
 // set of simple apis for server calls
 // server in turn integrates to headless cms
 
-export const getAll = () =>
+export const getAll = () => {
+  console.log("ENTERED GET ALL API")
   fetch(`${apiProfile}/api/db`, { headers })
     .then(res => res.json())
     .then((data) => {
       return data
     })
+  }
 
 export const remove = (contact) =>
   fetch(`${apiProfile}/api/db/${contact}`, {
@@ -50,8 +52,7 @@ export const remove = (contact) =>
 export const create = (body) =>
   fetch(`${apiProfile}/api/db`, {
     method: 'PUT',
-    headers: {
-      ...headers,
+    headers: {      
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(body)
@@ -60,8 +61,7 @@ export const create = (body) =>
 export const update = (body) =>
     fetch(`${apiProfile}/api/db`, {
       method: 'POST',
-      headers: {
-        ...headers,
+      headers: {       
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
