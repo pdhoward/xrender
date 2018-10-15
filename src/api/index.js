@@ -6,7 +6,16 @@
 ///////////////////////////////////////////////////
 
 const apiProfile = process.env.SERVER_API_URL || 'http://localhost:3100'
+let localStorage = {}
+localStorage.token = null
 
+/*
+// isomorphic code requires node package
+if (typeof localStorage === "undefined" || localStorage === null) {
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  localStorage = new LocalStorage('./scratch');
+}
+*/
 let token = localStorage.token
 
 if (!token)
@@ -16,6 +25,11 @@ const headers = {
   'Accept': 'application/json',
   'Authorization': token
 }
+
+console.log("testing ===============")
+console.log(`value of token is ${token}`)
+console.log(JSON.stringify(headers))
+
 
 // set of simple apis for server calls
 // server in turn integrates to headless cms

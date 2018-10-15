@@ -7,7 +7,7 @@ class DefaultLayout extends React.Component {
     return (
       <div>
         <div>
-          This is a web app which queries and displays results on on discovery collection.
+          This is an app which demonstrates cognitive framework for commercial web content
         </div>
       </div>
     );

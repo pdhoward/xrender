@@ -5,27 +5,26 @@
 //////             web client with cms integration    ///////
 ////// c strategic machines 2018 all rights reserved ///////
 ///////////////////////////////////////////////////////////
-
+import 'isomorphic-fetch';
 import React, {Component}       from 'react';
 import {books}                  from './components/data';
-import * as api                 from './api';
+//import * as api                 from './api';
 import Header                   from './components/Header';
 import BookList                 from './components/BookList';
 import CartList                 from './components/CartList';
-import 'isomorphic-fetch';
+
 //import './components/App.css';
 
 class Main extends Component {
-  constructor(props){
-    super(props);
+  constructor(...props){
+    super(...props);
     this.state={
       keyword: '',
       cart: [],
       isMobile: false,
       cartTotal: 0,
       openCart: false,
-      hello: 'this is a test',
-      books: {}
+      hello: 'this is a test'     
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.addBookToCart = this.addBookToCart.bind(this);
@@ -114,14 +113,20 @@ class Main extends Component {
       openCart: !this.state.openCart,
     });
   }
+/*
+    componentWillMount() {
+        console.log("component will mount")
+      
+    }
 
-componentDidMount() {
-    api.getAll().then((books) => {
-       // this.setState({books})
-       console.log(books)
-    })   
-}
-
+  componentDidMount() {
+      console.log("executing api to retrieve books")
+   // api.getAll().then((books) => {
+    // this.setState({books})
+  //  console.log(books)
+  //  })   
+  }
+*/
   render() {
     let {keyword, cart, cartTotal, isMobile} = this.state;
     const filteredBooks = books.filter((book)=>{

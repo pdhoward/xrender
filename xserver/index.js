@@ -59,15 +59,14 @@ const isDev = (app.get('env') === 'development');
 ///////////////////////////////////////////////////////
 ////////////  compile reactjs pages  /////////////////
 /////////////////////////////////////////////////////
-browserify.settings.development.precompile=true;
-browserify.settings.development.cache = true;
+//browserify.settings.development.precompile=true;
+//browserify.settings.development.cache = true;
 
-const browserifier = browserify(path.resolve(__dirname, '..', 'public/js/bundle.js'), {
-  plugins: [{ plugin: spreadplugin }],
+const browserifier = browserify(path.resolve(__dirname, '..', 'public/js/bundle.js'), {  
   watch: isDev,
   debug: isDev,
   extension: ['js'],
-  transform: ['babelify'],
+  transform: ['babelify']
 });
 
 if (!isDev) {

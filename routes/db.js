@@ -26,7 +26,7 @@ const db = (router) => {
 		api.getAll(req.token, function(response){
 			console.log("Get All Content Completed")
 			console.log(response)
-			res.status(200).send(response)
+			//res.status(200).send(response)
 			next()
 			})
 		})
@@ -63,4 +63,4 @@ const db = (router) => {
 
 }
 
-module.exports = dba
+module.exports = db
