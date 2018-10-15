@@ -148,6 +148,9 @@ app.use(breadcrumb())
 // home page
 app.get('/', home);
 
+// db handling
+app.use('/api/db', db);
+
 // fetch
 app.get('/api/fetch', apifetch);
 
