@@ -2,12 +2,12 @@
 
 'use strict';
 
-///////////////////////////////////////////////////////////////
-//////// process db http message for agents and products /////
-/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////
+//////// process http calls for data   /////
+////////////////////////////////////////////
 
 const bodyParser =  			require('body-parser')
-const api =         			require('../apia')
+const api =         			require('../api')
 
 const db = (router) => {
 
@@ -15,7 +15,7 @@ const db = (router) => {
 
 	router.delete("/:id", function(req, res, next) {
  	 console.log("-----------DB AGENTS ROUTE -----------")
- 	 api.deleteAgent(req.token, req.params.id, function(response){
+ 	 api.delete(req.token, req.params.id, function(response){
  		 res.status(200).send(response)
 		 next()
  	  })
@@ -23,7 +23,9 @@ const db = (router) => {
 
 	router.get('/', function(req, res, next) {
 		 console.log("-----------DB AGENTS ROUTE -----------")
-		api.getAgents(req.token, function(response){
+		api.getAll(req.token, function(response){
+			console.log("Get All Content Completed")
+			console.log(response)
 			res.status(200).send(response)
 			next()
 			})
@@ -32,7 +34,7 @@ const db = (router) => {
 	 router.post('/', function(req, res, next) {
 		  console.log("-----------DB AGENTS ROUTE -----------")
 			if (req.body) {
-		     api.updateAgent(req.token, req.body, function(response){
+		     api.update(req.token, req.body, function(response){
 		       res.status(200).send(response)
 					 next()
 		      })
@@ -47,7 +49,7 @@ const db = (router) => {
 	 router.put('/', function(req, res, next) {
 		  console.log("-----------DB AGENTS ROUTE -----------")	
 			if (req.body) {
-		     api.addAgent(req.token, req.body, function(response) {
+		     api.add(req.token, req.body, function(response) {
 		       res.status(200).send(response)
 					 next()
 		      })

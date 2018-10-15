@@ -35,7 +35,7 @@ export const remove = (contact) =>
 
 export const create = (body) =>
   fetch(`${apiProfile}/api/db`, {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
