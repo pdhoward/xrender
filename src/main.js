@@ -113,7 +113,7 @@ class Main extends Component {
       openCart: !this.state.openCart,
     });
   }
-/*
+
     componentWillMount() {
         console.log("component will mount")
       
@@ -126,7 +126,7 @@ class Main extends Component {
   //  console.log(books)
   //  })   
   }
-*/
+
   render() {
     let {keyword, cart, cartTotal, isMobile} = this.state;
     const filteredBooks = books.filter((book)=>{
