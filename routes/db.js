@@ -15,7 +15,7 @@ const db = (router) => {
 	router.use(bodyParser.json());
 
 	router.delete("/:id", function(req, res, next) {
- 	 console.log("-----------DB AGENTS ROUTE -----------")
+ 	 console.log("----------DB ROUTE -----------")
  	 api.delete(req.token, req.params.id, function(response){
  		 res.status(200).send(response)
 		 next()
@@ -23,17 +23,17 @@ const db = (router) => {
    })
 
 	router.get('/', function(req, res, next) {
-		 console.log(g("-----------DB AGENTS ROUTE -----------"))
+		 console.log(g("---------DB ROUTE -----------"))
 		api.getAll(req.token, function(response){
 			console.log("Get All Content Completed")
 			console.log(response)
-			//res.status(200).send(response)
+			res.status(200).send(response)
 			next()
 			})
 		})
 
 	 router.post('/', function(req, res, next) {
-		  console.log("-----------DB AGENTS ROUTE -----------")
+		  console.log("---------DB ROUTE -----------")
 			if (req.body) {
 		     api.update(req.token, req.body, function(response){
 		       res.status(200).send(response)
@@ -48,7 +48,7 @@ const db = (router) => {
 		 })
 
 	 router.put('/', function(req, res, next) {
-		  console.log("-----------DB AGENTS ROUTE -----------")	
+		  console.log("---------DB ROUTE -----------")	
 			if (req.body) {
 		     api.add(req.token, req.body, function(response) {
 		       res.status(200).send(response)

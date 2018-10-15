@@ -19,9 +19,11 @@ const client = contentful.createClient({
 ///////   get all entries    //////
 //////////////////////////////////
 const getAll = async (token, cb) => {
-
-  let response = await getContent()
-  return response  
+    let response = await getAllContent()
+    console.log(g("await function finished"))
+    console.log(r("==============bookstore entries========"))
+    console.log(response)
+    return cb(response)
 }
 
 /////////////////////////////////
@@ -49,30 +51,34 @@ const deleteEntry = async(token, cb) => {
 
 // fetch function - cms
 
-const getContent = () => {
+const getAllContent = () => {
     console.log(g('\nRetrieving CMS Content \n'))  
    
-    client.getContentTypes()
-        .then((response) => {
+    return new Promise((resolve, reject) => {
+        client.getContentType('bookstore')
+            .then((response) => {
 
-            console.log(response)
+                console.log("=====================bookstore fields=================")      
+                //console.log(response.items[0])
+                console.log(response)
 
-            let contentType = response.items.filter(c => c.name="bookstore")
+                //let contentType = response.items.filter(c => c.name="bookstore")                       
 
-            client.getEntries({
-                content_type: contentType[0].sys.id
-                })
-                .then((response) => {
-                    return response.items })
-                .catch((error) => {
-                    console.log(r(`\nError occurred while fetching Entries for ${y(contentType[0].name)}:`))
-                    console.error(error)
-                })
-        })
-    .catch((error) => {
-        console.log(r('\nError occurred while fetching Content Types:'))
-        console.error(error)
-    })    
+                client.getEntries({
+                    content_type: response.sys.id
+                    })
+                    .then((entries) => {                        
+                        return resolve(entries) })
+                    .catch((error) => {
+                        console.log(r(`\nError occurred while fetching Entries for ${y(response.name)}:`))
+                        console.error(error)
+                    })
+            })
+            .catch((error) => {
+                console.log(r('\nError occurred while fetching Content Types:'))
+                console.error(error)
+            })
+    }) 
 
 }
 

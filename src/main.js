@@ -116,10 +116,9 @@ class Main extends Component {
 
   componentDidMount() {
     console.log("executing api to retrieve books")
-    api.getAll().then((books) => {
-    // this.setState({books})
-    console.log(books)
-    })   
+    let getBooks = api.getAll()
+    console.log(getBooks)
+
   }
 
   render() {
