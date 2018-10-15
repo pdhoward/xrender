@@ -8,7 +8,6 @@
 
 import React, {Component}       from 'react';
 import {books}                  from './components/data';
-import * as api                 from './api';
 import Header                   from './components/Header';
 import BookList                 from './components/BookList';
 import CartList                 from './components/CartList';
@@ -24,8 +23,7 @@ class Main extends Component {
       isMobile: false,
       cartTotal: 0,
       openCart: false,
-      hello: 'this is a test',
-      books: {}
+      hello: 'this is a test'
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.addBookToCart = this.addBookToCart.bind(this);
@@ -108,20 +106,11 @@ class Main extends Component {
       this.removeBookFromCart(book);
     }
   }
-
   handleCartOpen(){
     this.setState({
       openCart: !this.state.openCart,
     });
   }
-
-componentDidMount() {
-    api.getAll().then((books) => {
-       // this.setState({books})
-       console.log(books)
-    })   
-}
-
   render() {
     let {keyword, cart, cartTotal, isMobile} = this.state;
     const filteredBooks = books.filter((book)=>{

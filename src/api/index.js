@@ -5,7 +5,7 @@
 //////      c strategic machines 2018        ///////
 ///////////////////////////////////////////////////
 
-const apiProfile = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:5002'
+const apiProfile = process.env.SERVER_API_URL || 'http://localhost:3100'
 
 let token = localStorage.token
 
@@ -43,7 +43,7 @@ export const create = (body) =>
     body: JSON.stringify(body)
   }).then(res => res.json())
 
-export const updateProfile = (body) =>
+export const update = (body) =>
     fetch(`${apiProfile}/api/db`, {
       method: 'POST',
       headers: {

@@ -121,6 +121,7 @@ const apifetch =            express.Router()
 const apipost =             express.Router()
 const nopage =              express.Router()
 const errpage =             express.Router()
+const db =                  express.Router()
 
 require('../routes/apiprep')(apiprep)
 require('../routes/apitest')(apitest)
@@ -129,6 +130,7 @@ require('../routes/apifetch')(apifetch)
 require('../routes/apipost')(apipost)
 require('../routes/nopage')(nopage)
 require('../routes/errpage')(errpage)
+require('../routes/db')(db)
 
 //////////////////////////////////////////////////////////////////////////
 ///////////////////////////// API CATALOGUE /////////////////////////////
