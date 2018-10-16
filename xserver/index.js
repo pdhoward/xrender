@@ -70,7 +70,8 @@ const browserifier = browserify(path.resolve(__dirname, '..', 'public/js/bundle.
 });
 
 if (!isDev) {
-  browserifier.browserify.transform('uglifyify', { global: true });
+  //browserifier.browserify.transform('uglifyify', { global: true });
+  console.log('Disabled this function')
 }
 
 // register middleware call

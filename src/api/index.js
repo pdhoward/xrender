@@ -5,7 +5,7 @@
 //////      c strategic machines 2018        ///////
 ///////////////////////////////////////////////////
 
-const apiProfile = process.env.SERVER_API_URL || 'http://localhost:3100'
+//const apiProfile = process.env.SERVER_API_URL || 'http://localhost:3100'
 let localStorage = {}
 localStorage.token = null
 
@@ -36,7 +36,7 @@ console.log(JSON.stringify(headers))
 
 export const getAll = () => {
   return new Promise((resolve, reject) => {
-      fetch(`${apiProfile}/api/db`, { headers })
+      fetch(`/api/db`, { headers })
         .then(res => res.json())
         .then((data) => {         
           resolve(data)
@@ -45,13 +45,13 @@ export const getAll = () => {
   }
 
 export const remove = (contact) =>
-  fetch(`${apiProfile}/api/db/${contact}`, {
+  fetch(`/api/db/${contact}`, {
     method: 'DELETE', headers })
     .then(res => res.json())
     .then(data => data.contact)
 
 export const create = (body) =>
-  fetch(`${apiProfile}/api/db`, {
+  fetch(`/api/db`, {
     method: 'PUT',
     headers: {      
       'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ export const create = (body) =>
   }).then(res => res.json())
 
 export const update = (body) =>
-    fetch(`${apiProfile}/api/db`, {
+    fetch(`/api/db`, {
       method: 'POST',
       headers: {       
         'Content-Type': 'application/json'

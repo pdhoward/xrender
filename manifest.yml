@@ -1,9 +1,9 @@
 ---
 applications:
 - path: .
-  name: bookstore
-  host: bookstore
-  buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+  name: strategicstore
+  buildpacks: 
+    - https://github.com/cloudfoundry/nodejs-buildpack
   memory: 256M
   instances: 1
   random-route: false

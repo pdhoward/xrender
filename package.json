@@ -1,5 +1,5 @@
 {
-  "name": "bookstore",
+  "name": "strategicstore",
   "version": "0.8.0",
   "description": "demonstrate content made intelligent for conversational economy",
   "main": "server.js",
@@ -74,6 +74,9 @@
     "uuid": "^3.3.2",
     "vcap_services": "^0.3.4",
     "watson-developer-cloud": "^3.11.1"
+  },
+  "engines": {
+    "node": "9.11.2"
   },
   "babel": {
     "presets": [
