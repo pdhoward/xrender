@@ -35,13 +35,14 @@ console.log(JSON.stringify(headers))
 // server in turn integrates to headless cms
 
 export const getAll = () => {
-  console.log("ENTERED GET ALL API")
-  fetch(`${apiProfile}/api/db`, { headers })
-    .then(res => res.json())
-    .then((data) => {
-      console.log("returned data")
-      console.log(data)
-      return data
+  return new Promise((resolve, reject) => {
+      fetch(`${apiProfile}/api/db`, { headers })
+        .then(res => res.json())
+        .then((data) => {
+          console.log("returned data")
+          //console.log(data)
+          resolve(data)
+        })
     })
   }
 
