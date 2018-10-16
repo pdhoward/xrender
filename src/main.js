@@ -132,9 +132,7 @@ class Main extends Component {
         
         this.setState({
             books: books
-        });
-        console.log(this.state.books)
-        
+        }); 
     })
     
 
