@@ -116,17 +116,20 @@ class Main extends Component {
 
   componentDidMount() {
     console.log("executing api to retrieve books")
+    let i = 0   // reassign id to ensure it is unique
     api.getAll().then((getBooks) => {
         let itemArray = getBooks.items
         let books = itemArray.map((m) => {
             let newObj = {}
+            i++
             newObj.title = m.fields.title
-            newObj.id = m.fields.id
+            newObj.id = i
             newObj.path = m.fields.path
             newObj.price = m.fields.price 
-            newObj.thumbnail = m.fields.thumbnail
+            newObj.thumbnail = m.fields.thumbnail           
             return newObj
         })
+        
         this.setState({
             books: books
         });

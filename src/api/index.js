@@ -38,9 +38,7 @@ export const getAll = () => {
   return new Promise((resolve, reject) => {
       fetch(`${apiProfile}/api/db`, { headers })
         .then(res => res.json())
-        .then((data) => {
-          console.log("returned data")
-          //console.log(data)
+        .then((data) => {         
           resolve(data)
         })
     })
