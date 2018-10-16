@@ -2,9 +2,14 @@ import React from 'react';
 
 
 const CartCard = ({item, removeBookFromCart, handleIncreaseQuantity, handleDecreaseQuantity}) =>{
+  if (item.thumbnail) {
+    item.url = item.thumbnail.fields.file.url
+  } else {
+    item.url = 'img/oops.jpg'
+  }
   return(
     <div className="cart-list-item">
-      <img src={item.thumbnail} alt={item.title}/>
+      <img src={item.url} alt={item.title}/>
       <div className="cart-item-content">
         <p>{item.title}</p>
         <p className="cart-item-price">

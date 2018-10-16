@@ -7,13 +7,10 @@
 ///////////////////////////////////////////////////////////
 import 'isomorphic-fetch';
 import React, {Component}       from 'react';
-//import {books}                  from './components/data';
 import * as api                 from './api';
 import Header                   from './components/Header';
 import BookList                 from './components/BookList';
 import CartList                 from './components/CartList';
-
-//import './components/App.css';
 
 class Main extends Component {
   constructor(...props){
