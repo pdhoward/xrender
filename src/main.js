@@ -138,7 +138,7 @@ class Main extends Component {
   }
 
   render() {
-    let {keyword, cart, cartTotal, isMobile} = this.state;
+    let {keyword, cart, cartTotal, isMobile, books} = this.state;
     const filteredBooks = books.filter((book)=>{
       let bookTitle = book.title.toLowerCase();
       return bookTitle.indexOf(keyword) > -1;
