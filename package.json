@@ -1,7 +1,7 @@
 {
-  "name": "render",
+  "name": "bookstore",
   "version": "0.8.0",
-  "description": "intelligent content",
+  "description": "demonstrate content made intelligent for conversational economy",
   "main": "server.js",
   "license": "MIT",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pdhoward/render.git"
+    "url": "git+https://github.com/pdhoward/xrender.git"
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.0",
