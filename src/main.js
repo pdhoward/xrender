@@ -7,7 +7,7 @@
 ///////////////////////////////////////////////////////////
 import 'isomorphic-fetch';
 import React, {Component}       from 'react';
-import {books}                  from './components/data';
+//import {books}                  from './components/data';
 import * as api                 from './api';
 import Header                   from './components/Header';
 import BookList                 from './components/BookList';
@@ -24,7 +24,7 @@ class Main extends Component {
       isMobile: false,
       cartTotal: 0,
       openCart: false,
-      hello: 'this is a test'     
+      books: []
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.addBookToCart = this.addBookToCart.bind(this);
@@ -117,17 +117,21 @@ class Main extends Component {
   componentDidMount() {
     console.log("executing api to retrieve books")
     api.getAll().then((getBooks) => {
-        //console.log(getBooks)
-        let books = getBooks.items.map((b) => {
+        let itemArray = getBooks.items
+        let books = itemArray.map((m) => {
             let newObj = {}
             newObj.title = m.fields.title
             newObj.id = m.fields.id
             newObj.path = m.fields.path
-            newObj.path = m.fields.price 
-            newObj.thumnail = m.fields.thumbnail.fields.file
+            newObj.price = m.fields.price 
+            newObj.thumbnail = m.fields.thumbnail
             return newObj
         })
-        console.log(books)
+        this.setState({
+            books: books
+        });
+        console.log(this.state.books)
+        
     })
     
 
