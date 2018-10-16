@@ -18,12 +18,16 @@ const client = contentful.createClient({
 ////////////////////////////////////
 ///////   get all entries    //////
 //////////////////////////////////
+
+/*
 const getAll = async (token, cb) => {
-    let response = await getAllContent()
-    console.log(g("await function finished"))
-    console.log(r("==============bookstore entries========"))
-    console.log(response)
+    let response = await getAllContent()   
     return cb(response)
+}
+*/
+const getAll = async (token) => {
+    let response = await getAllContent()
+    return response
 }
 
 /////////////////////////////////
@@ -56,13 +60,7 @@ const getAllContent = () => {
    
     return new Promise((resolve, reject) => {
         client.getContentType('bookstore')
-            .then((response) => {
-
-                console.log("=====================bookstore fields=================")      
-                //console.log(response.items[0])
-                console.log(response)
-
-                //let contentType = response.items.filter(c => c.name="bookstore")                       
+            .then((response) => {                  
 
                 client.getEntries({
                     content_type: response.sys.id

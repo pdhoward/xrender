@@ -22,15 +22,21 @@ const db = (router) => {
  	  })
    })
 
-	router.get('/', function(req, res, next) {
-		 console.log(g("---------DB ROUTE -----------"))
-		api.getAll(req.token, function(response){
-			console.log("Get All Content Completed")
-			console.log(response)
+	 /*
+	router.get('/', function(req, res, next) {		 
+		api.getAll(req.token, function(response){		
 			res.status(200).send(response)
 			next()
 			})
 		})
+*/
+	router.get('/', async (req, res, next) => {
+
+		let response = await api.getAll(req.token)		
+		res.status(200).send(response)
+		next()
+		
+	})
 
 	 router.post('/', function(req, res, next) {
 		  console.log("---------DB ROUTE -----------")
