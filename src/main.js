@@ -117,7 +117,17 @@ class Main extends Component {
   componentDidMount() {
     console.log("executing api to retrieve books")
     api.getAll().then((getBooks) => {
-        console.log(getBooks)
+        //console.log(getBooks)
+        let books = getBooks.items.map((b) => {
+            let newObj = {}
+            newObj.title = m.fields.title
+            newObj.id = m.fields.id
+            newObj.path = m.fields.path
+            newObj.path = m.fields.price 
+            newObj.thumnail = m.fields.thumbnail.fields.file
+            return newObj
+        })
+        console.log(books)
     })
     
 
